@@ -11,6 +11,7 @@ import pandas as pd
 def main():
     # Load data
     dataset_path = os.environ.get('dataset_path')
+    dataframe_path = os.environ.get('dataframe_path')
 
     # Dataframe from the json file
     df = pd.read_json(dataset_path)
@@ -18,6 +19,9 @@ def main():
     # Save the dataframe in a csv and xlsx file.
     SaveDataSet(df)
 
+    # Get the dataframe from the csv file
+    dataframe = pd.read_csv(os.path.join(dataframe_path, 'dataframe.csv'))
+    # datframe2 = pd.read_excel(os.path.join(dataframe_path, 'dataframe.xlsx'))
 
 def SaveDataSet(df):
     """
