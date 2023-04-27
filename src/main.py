@@ -39,6 +39,24 @@ def main():
     dataframe['text_vec'] = df.apply(lambda r: model.vectorize_text(
         r['pair'][0], r['pair'][1], 512), axis=1)
 
+    # DATA FOR TRAINING AND TESTING - Specifies data ratio for training and testing
+    # seleccionar aleatoriamente todas las filas en el DataFrame
+    df = df.sample(frac=1)
+    # especifica la proporción de los datos que se usarán para el entrenamiento
+    train_portion = float(os.environ.get('train_portion'))
+    # calcula el índice de la fila en la que dividir los datos en subconjuntos de entrenamiento y prueba
+    split_point = int(train_portion*len(df))
+    # asigna las filas anteriores al punto de división train_data y las filas posteriores al punto de división a test_data
+    train_data, test_data = df[:split_point].reset_index(
+        drop=True), df[split_point:].reset_index(drop=True)
+    # train_data = train_data.reset_index(drop=True)
+    print({
+        'train_data': len(train_data),
+        'test_data': len(test_data)
+    })
+
+    train_set, test_set = MyDataset(train_data), MyDataset(test_data)
+
 
 def SaveDataSet(df):
     """
