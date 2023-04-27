@@ -7,6 +7,9 @@ And finally, train the model and test it.
 import os
 import pandas as pd
 
+# Classes
+from classes.StackedCLSModel import StackedCLSModel
+
 
 def main():
     # Load data
@@ -22,6 +25,20 @@ def main():
     # Get the dataframe from the csv file
     dataframe = pd.read_csv(os.path.join(dataframe_path, 'dataframe.csv'))
     # datframe2 = pd.read_excel(os.path.join(dataframe_path, 'dataframe.xlsx'))
+
+    # Data to test
+    df = df.iloc[:8, :]
+    dataframe = dataframe.iloc[:8, :]
+
+    # Model
+    model = StackedCLSModel()
+
+    # Vectorize texts for all rows from the dataframe
+    df['text_vec'] = df.apply(lambda r: model.vectorize_text(
+        r['pair'][0], r['pair'][1], 512), axis=1)
+    dataframe['text_vec'] = df.apply(lambda r: model.vectorize_text(
+        r['pair'][0], r['pair'][1], 512), axis=1)
+
 
 def SaveDataSet(df):
     """
