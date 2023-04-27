@@ -1,0 +1,10 @@
+# Visual Studio Code 
+.vscode/
+.vscode/*.json
+
+# Virtual Environments
+.venv/
+.venv/*
+
+# Environments
+.env
